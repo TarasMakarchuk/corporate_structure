@@ -7,6 +7,7 @@ import { UserDto } from '../user/dto/user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserService } from 'src/user/user.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private userService: UserService,
+    private jwtService: JwtService,
   ) {}
 
   hashPassword(password: string): Observable<string> {
@@ -38,6 +40,37 @@ export class AuthService {
             return user;
           }),
         );
+      }),
+    );
+  }
+
+  validate(email: string, password: string): Observable<UserEntity> {
+    return from(
+      this.userRepository.findOne({
+        select: ['id', 'firstName', 'lastName', 'email', 'password', 'role'],
+        where: [{ email }],
+      }),
+    ).pipe(
+      switchMap((user: UserEntity) => {
+        return from(bcrypt.compare(password, user.password)).pipe(
+          map((isValidPassword: boolean) => {
+            if (isValidPassword) {
+              delete user.password;
+              return user;
+            }
+          }),
+        );
+      }),
+    );
+  }
+
+  login(user: UserDto): Observable<string> {
+    const { email, password } = user;
+    return this.validate(email, password).pipe(
+      switchMap((user: UserEntity) => {
+        if (user) {
+          return from(this.jwtService.signAsync({ user }));
+        }
       }),
     );
   }
