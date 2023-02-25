@@ -1,13 +1,33 @@
-import { Body, Controller, Delete, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
 import { Observable } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { ChangeRoleDto } from './dto/change-user-role.dto';
+import { UserEntity } from './entity/user.entity';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @Get()
+  getUsers(
+    @Query('take') take: number,
+    @Query('skip') skip: number,
+    @Query('sortedField') sortedField: string,
+  ): Observable<UserEntity[]> {
+    const LIMIT = 10;
+    take = take > LIMIT ? LIMIT : take;
+    return this.userService.findUsers(take, skip, sortedField);
+  }
 
   @Put(':id')
   update(

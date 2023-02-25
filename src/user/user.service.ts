@@ -14,6 +14,17 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
+  findUsers(take: number, skip: number, sortedField: string): Observable<UserEntity[]> {
+    return from(
+      this.userRepository
+        .createQueryBuilder('user')
+        .orderBy(`user.${sortedField}`, 'ASC')
+        .take(take)
+        .skip(skip)
+        .getMany(),
+    );
+  }
+
   createUser(dto: UserDto): Observable<UserDto> {
     return from(this.userRepository.save(dto)).pipe(
       map((user: UserEntity) => {
