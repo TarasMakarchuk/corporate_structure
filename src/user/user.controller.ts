@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
 import { Observable } from 'rxjs';
@@ -8,11 +8,6 @@ import { ChangeRoleDto } from './dto/change-user-role.dto';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-
-  @Post()
-  create(@Body() dto: UserDto): Observable<UserDto> {
-    return this.userService.createUser(dto);
-  }
 
   @Put(':id')
   update(
