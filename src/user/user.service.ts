@@ -14,7 +14,11 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  findUsers(take: number, skip: number, sortedField: string): Observable<UserEntity[]> {
+  findUsers(
+    take: number,
+    skip: number,
+    sortedField: string,
+  ): Observable<UserEntity[]> {
     return from(
       this.userRepository
         .createQueryBuilder('user')
