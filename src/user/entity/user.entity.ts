@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Role } from '../role/role.enum';
+import { SubordinateEntity } from '../../subordinate/entity/subordinate.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -32,4 +34,10 @@ export class UserEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(
+    () => SubordinateEntity,
+    (user: SubordinateEntity) => user.subordinate,
+  )
+  boss: UserEntity;
 }

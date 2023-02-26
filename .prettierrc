@@ -4,5 +4,5 @@
   "tabWidth": 2,
   "semi": true,
   "insertFinalNewline": true,
-  "maxLineLength": 100
+  "maxLineLength": 120
 }
