@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './db/data-source';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { SubordinateModule } from './subordinate/subordinate.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    SubordinateModule,
   ],
   controllers: [],
   providers: [],

@@ -29,7 +29,7 @@ export class UserService {
     );
   }
 
-  createUser(dto: UserDto): Observable<UserDto> {
+  createUser(dto: UserDto): Observable<UserEntity> {
     return from(this.userRepository.save(dto)).pipe(
       map((user: UserEntity) => {
         delete user.password;
