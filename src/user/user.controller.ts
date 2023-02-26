@@ -16,13 +16,17 @@ import { Observable } from 'rxjs';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { ChangeRoleDto } from './dto/change-user-role.dto';
 import { UserEntity } from './entity/user.entity';
-import { JwtGuard } from 'src/auth/guards/jwt/jwt.guard';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { Role } from './role/role.enum';
+import { Roles } from '../auth/decorators/roles/roles.decorator';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(JwtGuard)
+  @Roles(Role.ADMIN, Role.BOSS, Role.USER)
+  @UseGuards(JwtGuard, RolesGuard)
   @Get()
   getUsers(
     @Query('take') take: number,
@@ -44,7 +48,8 @@ export class UserController {
     return this.userService.updateUser(id, dto);
   }
 
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @Put('/role/:id')
   @HttpCode(HttpStatus.CREATED)
   changeRole(
@@ -54,7 +59,8 @@ export class UserController {
     return this.userService.changeUserRole(id, dto);
   }
 
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: number): Observable<DeleteResult> {
     return this.userService.removeUser(id);
