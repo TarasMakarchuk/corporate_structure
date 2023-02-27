@@ -21,11 +21,19 @@ import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { Role } from './role/role.enum';
 import { Roles } from '../auth/decorators/roles/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @ApiOperation({
+    summary: `Get a list of users. 
+    For different user roles, different user list is displayed. 
+    Pagination, sorting by any columns of the table is provided.`,
+  })
+  @ApiResponse({ status: HttpStatus.OK, type: [UserEntity] })
   @Roles(Role.ADMIN, Role.BOSS, Role.USER)
   @UseGuards(JwtGuard, RolesGuard)
   @Get()
@@ -40,6 +48,8 @@ export class UserController {
     return this.userService.findUsers(take, skip, sortedField, req.user);
   }
 
+  @ApiOperation({ summary: 'Update user' })
+  @ApiResponse({ status: HttpStatus.CREATED, type: UserEntity })
   @UseGuards(JwtGuard)
   @Put(':id')
   @HttpCode(HttpStatus.CREATED)
@@ -50,6 +60,8 @@ export class UserController {
     return this.userService.updateUser(id, dto);
   }
 
+  @ApiOperation({ summary: "Change user's role (only for Admin role)" })
+  @ApiResponse({ status: HttpStatus.CREATED, type: UserEntity })
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Put('/role/:id')
@@ -61,6 +73,8 @@ export class UserController {
     return this.userService.changeUserRole(id, dto);
   }
 
+  @ApiOperation({ summary: 'Delete user' })
+  @ApiResponse({ status: HttpStatus.OK })
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Delete(':id')

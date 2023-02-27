@@ -105,9 +105,17 @@ export class SubordinateService {
     );
   }
 
-  removeSubordinate(id: number): Observable<DeleteResult> {
+  removeSubordinate(id: number, bossId: number): Observable<DeleteResult> {
     return from(this.findSubordinateById(id)).pipe(
       switchMap((subordinate: SubordinateEntity) => {
+        if (subordinate.bossId !== bossId) {
+          if (subordinate.bossId !== bossId) {
+            throw new HttpException(
+              'Only the boss whose subordinate a subordinate can remove this subordinate',
+              HttpStatus.FORBIDDEN,
+            );
+          }
+        }
         return this.subordinateRepository.delete(subordinate.id);
       }),
     );
