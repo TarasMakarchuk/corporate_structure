@@ -5,6 +5,8 @@ import { dataSourceOptions } from './db/data-source';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { SubordinateModule } from './subordinate/subordinate.module';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionsFilter } from './core/all-exceptions.filter';
 
 @Module({
   imports: [
@@ -19,6 +21,11 @@ import { SubordinateModule } from './subordinate/subordinate.module';
     SubordinateModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
 export class AppModule {}

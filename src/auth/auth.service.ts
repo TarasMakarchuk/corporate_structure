@@ -78,12 +78,13 @@ export class AuthService {
     ).pipe(
       switchMap((user: UserEntity) => {
         if (!user) {
+          // throw new HttpException('Not found', HttpStatus.NOT_FOUND);
           throw new HttpException(
             {
-              status: HttpStatus.FORBIDDEN,
+              status: HttpStatus.NOT_FOUND,
               error: 'Invalid credentials',
             },
-            HttpStatus.FORBIDDEN,
+            HttpStatus.NOT_FOUND,
           );
         }
         return from(bcrypt.compare(password, user.password)).pipe(
