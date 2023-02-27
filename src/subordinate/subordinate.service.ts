@@ -24,7 +24,7 @@ export class SubordinateService {
       switchMap((subordinate: SubordinateEntity) => {
         if (subordinate) {
           throw new HttpException(
-            'Subordinate is already busy',
+            'A subordinate is under the supervision of another boss',
             HttpStatus.BAD_REQUEST,
           );
         } else {
@@ -37,7 +37,7 @@ export class SubordinateService {
                 });
               } else {
                 throw new HttpException(
-                  'Only a regular user can be a subordinate',
+                  'Only a user can be a subordinate',
                   HttpStatus.BAD_REQUEST,
                 );
               }
@@ -83,11 +83,17 @@ export class SubordinateService {
         if (!subordinate) {
           throw new HttpException(
             'Subordinate not found',
-            HttpStatus.BAD_REQUEST,
+            HttpStatus.NOT_FOUND,
           );
         } else {
           return from(this.userService.findUserById(dto.nextBossId)).pipe(
             switchMap((user: UserEntity) => {
+              if (currentBossId === dto.nextBossId) {
+                  throw new HttpException(
+                      'You cannot assign an subordinate who reports to another boss',
+                      HttpStatus.FORBIDDEN,
+                  );
+              }
               return this.subordinateRepository.update(
                 { userId: dto.subordinateId },
                 { bossId: user.id },
