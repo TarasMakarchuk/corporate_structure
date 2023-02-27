@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { LoginUserDto } from '../user/dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -98,7 +99,7 @@ export class AuthService {
     );
   }
 
-  login(user: UserDto): Observable<string> {
+  login(user: LoginUserDto): Observable<string> {
     const { email, password } = user;
     return this.validate(email, password).pipe(
       switchMap((user: UserEntity) => {

@@ -1,13 +1,7 @@
 import { IsEmail, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserDto {
-  @ApiProperty({ example: 'John', description: 'First name' })
-  readonly firstName: string;
-
-  @ApiProperty({ example: 'Doe', description: 'Last name' })
-  readonly lastName: string;
-
+export class LoginUserDto {
   @ApiProperty({ example: 'example@gmail.com', description: 'Email address' })
   @IsEmail()
   readonly email: string;
