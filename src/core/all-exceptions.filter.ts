@@ -68,7 +68,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     return `Response code: ${statusCode} - Method: ${method} - URL: ${url}
         ${JSON.stringify(errorResponse)}
         User: ${JSON.stringify(request.user ?? 'Not signed in')}
-        ${exception instanceof HttpException ? exception.stack : error}`;
+        ${exception instanceof HttpException ? exception.stack : error}\n\n`;
   };
 
   private writeErrorLogToFile = (errorLog: string): void => {
