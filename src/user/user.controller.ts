@@ -8,6 +8,7 @@ import {
   Param,
   Put,
   Query,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -32,10 +33,11 @@ export class UserController {
     @Query('take') take: number,
     @Query('skip') skip: number,
     @Query('sortedField') sortedField: string,
-  ): Observable<UserEntity[]> {
+    @Request() req,
+  ): Observable<UserEntity[] | UserEntity> {
     const LIMIT = 10;
     take = take > LIMIT ? LIMIT : take;
-    return this.userService.findUsers(take, skip, sortedField);
+    return this.userService.findUsers(take, skip, sortedField, req.user);
   }
 
   @UseGuards(JwtGuard)

@@ -18,15 +18,36 @@ export class UserService {
     take: number,
     skip: number,
     sortedField: string,
-  ): Observable<UserEntity[]> {
-    return from(
-      this.userRepository
-        .createQueryBuilder('user')
-        .orderBy(`user.${sortedField}`, 'ASC')
-        .take(take)
-        .skip(skip)
-        .getMany(),
-    );
+    user: UserEntity,
+  ): Observable<UserEntity[] | UserEntity> {
+    const { role, id } = user;
+    if (role === Role.ADMIN) {
+      return from(
+        this.userRepository
+          .createQueryBuilder('user')
+          .orderBy(`user.${sortedField}`, 'ASC')
+          .take(take)
+          .skip(skip)
+          .getMany(),
+      );
+    }
+
+    if (role === Role.BOSS) {
+      return from(
+        this.userRepository.find({
+          where: [{ id }],
+          relations: ['subordinate'],
+        }),
+      );
+    }
+
+    if (role === Role.USER) {
+      return from(
+        this.userRepository.findOne({
+          where: [{ id }],
+        }),
+      );
+    }
   }
 
   createUser(dto: UserDto): Observable<UserEntity> {
