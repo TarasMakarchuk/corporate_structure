@@ -25,7 +25,7 @@ export class SubordinateService {
         if (subordinate) {
           throw new HttpException(
             'A subordinate is under the supervision of another boss',
-            HttpStatus.BAD_REQUEST,
+            HttpStatus.FORBIDDEN,
           );
         } else {
           return from(this.userService.findUserById(userId)).pipe(
@@ -38,7 +38,7 @@ export class SubordinateService {
               } else {
                 throw new HttpException(
                   'Only a user can be a subordinate',
-                  HttpStatus.BAD_REQUEST,
+                  HttpStatus.FORBIDDEN,
                 );
               }
             }),
