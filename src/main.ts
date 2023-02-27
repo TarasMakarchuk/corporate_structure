@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
-import * as fs from "fs";
-import * as morgan from "morgan";
+import { Logger, ValidationPipe } from '@nestjs/common';
+import * as fs from 'fs';
+import * as morgan from 'morgan';
 import { AppModule } from './app.module';
 
 const logStream = fs.createWriteStream('api.log', {
@@ -14,6 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe());
   app.use(morgan('tiny', { stream: logStream }));
   await app.listen(PORT);
   Logger.log(`Server start on host http://localhost:${PORT}`);
