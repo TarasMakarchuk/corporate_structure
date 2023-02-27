@@ -89,10 +89,10 @@ export class SubordinateService {
           return from(this.userService.findUserById(dto.nextBossId)).pipe(
             switchMap((user: UserEntity) => {
               if (currentBossId === dto.nextBossId) {
-                  throw new HttpException(
-                      'You cannot assign an subordinate who reports to another boss',
-                      HttpStatus.FORBIDDEN,
-                  );
+                throw new HttpException(
+                  'You cannot assign an subordinate who reports to another boss',
+                  HttpStatus.FORBIDDEN,
+                );
               }
               return this.subordinateRepository.update(
                 { userId: dto.subordinateId },

@@ -2,8 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToOne,
-  PrimaryGeneratedColumn, UpdateDateColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from '../../user/entity/user.entity';
 
@@ -24,6 +25,6 @@ export class SubordinateEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToOne(() => UserEntity, (user: UserEntity) => user.boss)
-  subordinate: UserEntity;
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.subordinate)
+  boss: UserEntity;
 }

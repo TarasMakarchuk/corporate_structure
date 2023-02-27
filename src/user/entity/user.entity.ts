@@ -37,7 +37,7 @@ export class UserEntity {
 
   @OneToMany(
     () => SubordinateEntity,
-    (user: SubordinateEntity) => user.subordinate,
+    (subordinate: SubordinateEntity) => subordinate.boss,
   )
-  boss: UserEntity;
+  subordinate: SubordinateEntity[];
 }
