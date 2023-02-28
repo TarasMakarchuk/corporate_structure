@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { SubordinateModule } from './subordinate/subordinate.module';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionsFilter } from './core/all-exceptions.filter';
-import { dataSourceOptions } from '../db/data-source';
+import { dataSourceOptions } from './db/data-source';
 
 @Module({
   imports: [
