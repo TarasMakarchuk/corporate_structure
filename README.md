@@ -14,11 +14,11 @@
 ## Description
 
 A tiny server app based on Node.js (Nest.js).
-The app implement simple organization user structure management operations.
-The following user roles supported:
+The app implements simple organization user structure management operations.
+The following user roles are supported:
 a. Administrator (top-most user)
 b. Boss (any user with at least 1 subordinate)
-c. Regular user (user without subordinates)
+c. Regular user (user without subordinates).
 Each user except the Administrator must have a boss (strictly one).
 The following REST API endpoints exposed:
 1. Register user.
@@ -29,28 +29,25 @@ The following REST API endpoints exposed:
 - regular user can see only himself.
 4. Change user's boss (only boss can do that and only for his subordinates).
 
-## Installation
+## Installation ☕
 
 ```bash
 $ npm install
 or
 $ yarn install
 ```
+___
 
-## Running the app
-
+## Setup environment on the Server`🔧`
 ```bash
-# development
-$ npm run start
+# development mode
+1. Create inside server dir file .env
+2. Copy content from .env.dist to .env
+3. correct inside the .env file the data to the required
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Running the server
+## Migrations 🔧
 
 ```bash
 # create migrations
@@ -61,6 +58,19 @@ $ npm run migration:generate -- src/db/migrations/migration_name
 
 # run migrations
 $ npm run migration:run
+```
+
+## Running the app 🚀
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
 ```
 
 ## Swagger documentation http://localhost:5001/api/docs
