@@ -2,6 +2,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { UserEntity } from '../user/entity/user.entity';
 import { SubordinateEntity } from '../subordinate/entity/subordinate.entity';
+import { usersSubordinatesTables11677618532469 } from './migrations/1677618532469-users-subordinates-tables';
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
   entities: [UserEntity, SubordinateEntity],
-  migrations: ['dist/**/migrations/*.js'],
+  migrations: [usersSubordinatesTables11677618532469],
   migrationsRun: true,
   logging: true,
 };

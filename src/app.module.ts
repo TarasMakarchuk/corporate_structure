@@ -13,8 +13,8 @@ import { dataSourceOptions } from './db/data-source';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       ...dataSourceOptions,
-      autoLoadEntities: true,
-      synchronize: true,
+      autoLoadEntities: false,
+      synchronize: false,
     }),
     UserModule,
     AuthModule,
