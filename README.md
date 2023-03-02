@@ -16,8 +16,8 @@
 A tiny server app based on Node.js (Nest.js).
 The app implements simple organization user structure management operations.
 The following user roles are supported:
-a. Administrator (top-most user)
-b. Boss (any user with at least 1 subordinate)
+a. Administrator (top-most user, only he can change user roles);
+b. Boss (any user with at least 1 subordinate);
 c. Regular user (user without subordinates).
 Each user except the Administrator must have a boss (strictly one).
 The following REST API endpoints exposed:
@@ -31,6 +31,17 @@ The following REST API endpoints exposed:
 
 ## Swagger documentation 📋
 ### http://localhost:5000/api/docs
+
+## Postman collections 📬
+### https://drive.google.com/file/d/1i0EukjcrnxUE-Ie2VOpHYj_OflhhB720/view?usp=share_link
+
+## Admin's credentials 🔐
+```bash
+ filrsrtName: "Admin"
+ lastName: "Admin"
+ enail: "admin@gmail.com"
+ password: "test"
+```
 
 ## Installation ☕
 
@@ -60,6 +71,14 @@ $ npm run migration:generate src/db/migrations/migration_name
 $ npm run migration:run
 ```
 
+## Seeding the database 🌱
+
+```bash
+# seed table
+$ npm run seed:run
+
+```
+
 ## Running the app 🚀
 
 ```bash
@@ -73,7 +92,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-# Running the app and database in the Docker 🐋
+# Running the app and the database in the Docker 🐋
 
 ```
 Change in the .env file variable 
