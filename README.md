@@ -29,6 +29,9 @@ The following REST API endpoints exposed:
 - regular user can see only himself.
 4. Change user's boss (only boss can do that and only for his subordinates).
 
+## Swagger documentation 📋
+### http://localhost:5000/api/docs
+
 ## Installation ☕
 
 ```bash
@@ -70,4 +73,27 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Swagger documentation http://localhost:5001/api/docs
+# Running the app and database in the Docker 🐋
+
+```
+Change in the .env file variable 
+from 
+POSTGRES_HOST=localhost 
+to 
+#POSTGRES_HOST=docker-host
+```
+
+```bash
+# build the container
+$ docker-compose build
+
+# start the container
+
+
+
+$ docker-compose up
+
+# stop the container
+$ docker-compose up
+```
+

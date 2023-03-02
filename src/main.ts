@@ -28,8 +28,8 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   await app.listen(PORT, () => {
-    Logger.log(`http://${HOST}:${PORT}`, `Server start on host`);
-    Logger.log(`http://${HOST}:${PORT}/api/docs`, `Swagger documentation`);
+    Logger.log(`http://localhost:${PORT}`, `Server start on host`);
+    Logger.log(`http://localhost:${PORT}/api/docs`, `Swagger documentation`);
   });
 }
 
