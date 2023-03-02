@@ -57,7 +57,7 @@ ___
 # development mode
 1. Create inside server dir file .env
 2. Copy content from .env.dist to .env
-3. correct inside the .env file the data to the required
+3. Change the data in the .env file to required
 
 ```
 
@@ -110,6 +110,6 @@ $ docker-compose build
 $ docker-compose up
 
 # stop the container
-$ docker-compose up
+$ docker-compose down
 ```
 
