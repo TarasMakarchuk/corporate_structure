@@ -88,9 +88,6 @@ to
 $ docker-compose build
 
 # start the container
-
-
-
 $ docker-compose up
 
 # stop the container
