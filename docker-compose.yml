@@ -15,10 +15,10 @@ services:
       - "9129:9129"
     command: npm run start:dev
     depends_on:
-      - db_postgres
+      - db
     restart: always
 
-  db_postgres:
+  db:
     container_name: docker-host
     image: postgres:15.0-alpine
     env_file:
@@ -30,6 +30,21 @@ services:
     volumes:
       - "pgdata:/var/lib/postgresql/data"
     restart: always
+
+  migration:
+    build:
+      context: .
+    command: [
+      "npm",
+      "run",
+      "migration:run"
+    ]
+    links:
+      - db
+    depends_on:
+      - db
+    env_file:
+      - .env
 
 volumes:
   pgdata:

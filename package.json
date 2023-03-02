@@ -10,7 +10,7 @@
     "build": "nest build",
     "format": "prettier --write src/**/*.ts",
     "start": "nest start",
-    "start:dev": "npm run format && npm run build && nest start --watch ",
+    "start:dev": "npm run format && npm run seed:run && npm run build && nest start --watch ",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -24,7 +24,8 @@
     "migration:create": "typeorm-ts-node-commonjs migration:create",
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
-    "migrate:drop": "npm run start && npm run typeorm schema:drop"
+    "migrate:drop": "npm run start && npm run typeorm schema:drop",
+    "seed:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -d ./src/db/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -47,7 +48,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.6.2",
-    "typeorm": "^0.3.12"
+    "typeorm": "^0.3.12",
+    "typeorm-extension": "^2.5.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.2.0",
