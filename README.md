@@ -80,7 +80,7 @@ Change in the .env file variable
 from 
 POSTGRES_HOST=localhost 
 to 
-#POSTGRES_HOST=docker-host
+POSTGRES_HOST=docker-host
 ```
 
 ```bash
