@@ -53,10 +53,7 @@ export class UserController {
   @UseGuards(JwtGuard)
   @Put(':id')
   @HttpCode(HttpStatus.CREATED)
-  update(
-    @Param('id') id: number,
-    @Body() dto: UserDto,
-  ): Observable<UpdateResult> {
+  update(@Param('id') id: number, @Body() dto: UserDto): Observable<UpdateResult> {
     return this.userService.updateUser(id, dto);
   }
 
@@ -66,10 +63,7 @@ export class UserController {
   @Roles(Role.ADMIN)
   @Put('/role/:id')
   @HttpCode(HttpStatus.CREATED)
-  changeRole(
-    @Param('id') id: number,
-    @Body() dto: ChangeRoleDto,
-  ): Observable<UpdateResult> {
+  changeRole(@Param('id') id: number, @Body() dto: ChangeRoleDto): Observable<UpdateResult> {
     return this.userService.changeUserRole(id, dto);
   }
 

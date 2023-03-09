@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  HttpStatus,
-  Param,
-  Post,
-  Put,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, HttpStatus, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
 import { SubordinateService } from './subordinate.service';
 import { SubordinateEntity } from './entity/subordinate.entity';
 import { Observable } from 'rxjs';
@@ -32,14 +22,8 @@ export class SubordinateController {
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.BOSS)
   @Post(':id')
-  assignSubordinate(
-    @Param('id') userId: number,
-    @Request() req,
-  ): Observable<SubordinateEntity> {
-    return this.subordinateService.assignSubordinateToBoss(
-      req.user.id,
-      Number(userId),
-    );
+  assignSubordinate(@Param('id') userId: number, @Request() req): Observable<SubordinateEntity> {
+    return this.subordinateService.assignSubordinateToBoss(req.user.id, Number(userId));
   }
 
   @ApiOperation({
@@ -49,10 +33,7 @@ export class SubordinateController {
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.BOSS)
   @Put()
-  changeBoss(
-    @Body() dto: ChangeBossDto,
-    @Request() req,
-  ): Observable<UpdateResult> {
+  changeBoss(@Body() dto: ChangeBossDto, @Request() req): Observable<UpdateResult> {
     return this.subordinateService.changeBossOfSubordinate(req.user.id, dto);
   }
 
@@ -63,10 +44,7 @@ export class SubordinateController {
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(Role.BOSS)
   @Delete(':id')
-  deleteSubordinate(
-    @Param('id') id: number,
-    @Request() req,
-  ): Observable<DeleteResult> {
+  deleteSubordinate(@Param('id') id: number, @Request() req): Observable<DeleteResult> {
     const bossId = req.user.id;
     return this.subordinateService.removeSubordinate(id, bossId);
   }

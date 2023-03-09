@@ -10,9 +10,7 @@ import { MainSeeder } from './seeds/main.seeder';
 dotenv.config();
 
 const usersSubordinatesTables =
-  process.env.POSTGRES_HOST === 'localhost'
-    ? usersSubordinatesTablesLocal
-    : usersSubordinatesTablesDocker;
+  process.env.POSTGRES_HOST === 'localhost' ? usersSubordinatesTablesLocal : usersSubordinatesTablesDocker;
 
 export const dataSourceOptions: DataSourceOptions & SeederOptions = {
   type: 'postgres',
