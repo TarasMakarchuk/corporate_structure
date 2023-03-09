@@ -6,10 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { UserDto } from '../../user/dto/user.dto';
 
 export class UserSeeder implements Seeder {
-  async run(
-    dataSource: DataSource,
-    factoryManager: SeederFactoryManager,
-  ): Promise<void> {
+  async run(dataSource: DataSource, factoryManager: SeederFactoryManager): Promise<void> {
     const userRepository = dataSource.getRepository(UserEntity);
 
     const userExists = await userRepository.findOne({
