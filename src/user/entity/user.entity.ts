@@ -45,9 +45,6 @@ export class UserEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(
-    () => SubordinateEntity,
-    (subordinate: SubordinateEntity) => subordinate.boss,
-  )
+  @OneToMany(() => SubordinateEntity, (subordinate: SubordinateEntity) => subordinate.boss)
   subordinate: SubordinateEntity[];
 }

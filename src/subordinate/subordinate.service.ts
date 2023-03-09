@@ -16,10 +16,7 @@ export class SubordinateService {
     private userService: UserService,
   ) {}
 
-  assignSubordinateToBoss(
-    bossId: number,
-    userId: number,
-  ): Observable<SubordinateEntity> {
+  assignSubordinateToBoss(bossId: number, userId: number): Observable<SubordinateEntity> {
     return from(this.subordinateExists(userId)).pipe(
       switchMap((subordinate: SubordinateEntity) => {
         if (subordinate) {
@@ -36,10 +33,7 @@ export class SubordinateService {
                   userId: user.id,
                 });
               } else {
-                throw new HttpException(
-                  'Only a user can be a subordinate',
-                  HttpStatus.FORBIDDEN,
-                );
+                throw new HttpException('Only a user can be a subordinate', HttpStatus.FORBIDDEN);
               }
             }),
           );
@@ -64,27 +58,18 @@ export class SubordinateService {
     ).pipe(
       map((subordinate: SubordinateEntity) => {
         if (!subordinate) {
-          throw new HttpException(
-            'Subordinate not found',
-            HttpStatus.NOT_FOUND,
-          );
+          throw new HttpException('Subordinate not found', HttpStatus.NOT_FOUND);
         }
         return subordinate;
       }),
     );
   }
 
-  changeBossOfSubordinate(
-    currentBossId: number,
-    dto: ChangeBossDto,
-  ): Observable<UpdateResult> {
+  changeBossOfSubordinate(currentBossId: number, dto: ChangeBossDto): Observable<UpdateResult> {
     return from(this.subordinateExists(dto.subordinateId)).pipe(
       switchMap((subordinate: SubordinateEntity) => {
         if (!subordinate) {
-          throw new HttpException(
-            'Subordinate not found',
-            HttpStatus.NOT_FOUND,
-          );
+          throw new HttpException('Subordinate not found', HttpStatus.NOT_FOUND);
         } else {
           return from(this.userService.findUserById(dto.nextBossId)).pipe(
             switchMap((user: UserEntity) => {
@@ -94,10 +79,7 @@ export class SubordinateService {
                   HttpStatus.FORBIDDEN,
                 );
               }
-              return this.subordinateRepository.update(
-                { userId: dto.subordinateId },
-                { bossId: user.id },
-              );
+              return this.subordinateRepository.update({ userId: dto.subordinateId }, { bossId: user.id });
             }),
           );
         }

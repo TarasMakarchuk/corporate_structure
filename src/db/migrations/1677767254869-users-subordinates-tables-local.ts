@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class usersSubordinatesTables31677767254869
-  implements MigrationInterface
-{
+export class usersSubordinatesTables31677767254869 implements MigrationInterface {
   name = 'usersSubordinatesTables31677767254869';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -18,9 +16,7 @@ export class usersSubordinatesTables31677767254869
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "subordinate" DROP CONSTRAINT "FK_8a2ad1757c222e0886eee0b4d0f"`,
-    );
+    await queryRunner.query(`ALTER TABLE "subordinate" DROP CONSTRAINT "FK_8a2ad1757c222e0886eee0b4d0f"`);
     await queryRunner.query(`DROP TABLE "user"`);
     await queryRunner.query(`DROP TABLE "subordinate"`);
   }
