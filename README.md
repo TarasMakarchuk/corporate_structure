@@ -112,4 +112,3 @@ $ docker-compose up
 # stop the container
 $ docker-compose down
 ```
-
